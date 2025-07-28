@@ -3,10 +3,65 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
     initAudioPlayer();
     initEpisodeTabs();
+    initEpisodesToggle();
     initContactForm();
     initScrollAnimations();
     initSmoothScrolling();
+    initMobileNavigation();
+    optimizePerformance();
 });
+
+/* ================================
+   MOBILE NAVIGATION
+   ================================ */
+function initMobileNavigation() {
+    const hamburger = document.getElementById('nav-hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+}
+
+/* ================================
+   EPISODES TOGGLE FUNCTIONALITY
+   ================================ */
+function initEpisodesToggle() {
+    // This function is called from HTML onclick
+}
+
+function toggleEpisodes(seasonId) {
+    const hiddenEpisodes = document.getElementById(`${seasonId}-hidden`);
+    const button = event.target;
+    
+    if (hiddenEpisodes.classList.contains('show')) {
+        hiddenEpisodes.classList.remove('show');
+        button.textContent = 'See More Episodes';
+    } else {
+        hiddenEpisodes.classList.add('show');
+        button.textContent = 'Show Less';
+    }
+}
 
 /* ================================
    AUDIO PLAYER FUNCTIONALITY
@@ -141,7 +196,7 @@ function initAudioPlayer() {
     function showAudioError() {
         playPauseBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
         playPauseBtn.setAttribute('aria-label', 'Audio unavailable');
-        playPauseBtn.style.background = '#ef4444';
+        playPauseBtn.style.background = 'var(--primary-blue)';
     }
 }
 
@@ -323,7 +378,7 @@ function initScrollAnimations() {
     // Intersection Observer for scroll animations
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -30px 0px'
     };
 
     const observer = new IntersectionObserver(function(entries) {
@@ -356,8 +411,70 @@ function initScrollAnimations() {
     gridContainers.forEach(container => {
         const items = container.children;
         Array.from(items).forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.1}s`;
+            item.style.animationDelay = `${index * 0.05}s`;
         });
+    });
+}
+
+/* ================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================ */
+function optimizePerformance() {
+    // Lazy load images
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => {
+            img.classList.add('lazy-load');
+            imageObserver.observe(img);
+        });
+    }
+
+    // Optimize scroll events
+    let ticking = false;
+    
+    function updateScrollEffects() {
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollEffects);
+            ticking = true;
+        }
+    });
+
+    // Preload critical resources
+    const criticalImages = [
+        'images/ktrplogo.jpg',
+        'images/hostspicture.jpg',
+        'images/podcastbanner.jpg'
+    ];
+
+    criticalImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
     });
 }
 
@@ -372,7 +489,7 @@ function initSmoothScrolling() {
             const target = document.querySelector(this.getAttribute('href'));
             
             if (target) {
-                const headerOffset = 80;
+                const headerOffset = 70;
                 const elementPosition = target.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -420,21 +537,6 @@ function throttle(func, limit) {
     }
 }
 
-// Performance monitoring
-const perfObserver = new PerformanceObserver((list) => {
-    for (const entry of list.getEntries()) {
-        if (entry.entryType === 'measure') {
-            console.log(`${entry.name}: ${entry.duration}ms`);
-        }
-    }
-});
-
-try {
-    perfObserver.observe({ entryTypes: ['measure'] });
-} catch (e) {
-    // Performance Observer not supported
-}
-
 // Accessibility improvements
 document.addEventListener('keydown', function(e) {
     // Add focus indicators for keyboard navigation
@@ -451,7 +553,7 @@ document.addEventListener('mousedown', function() {
 const style = document.createElement('style');
 style.textContent = `
     .keyboard-navigation *:focus {
-        outline: 3px solid var(--primary-light-blue) !important;
+        outline: 2px solid var(--primary-blue) !important;
         outline-offset: 2px !important;
     }
 `;
@@ -463,7 +565,7 @@ document.head.appendChild(style);
 
 // Global error handler
 window.addEventListener('error', function(e) {
-    console.error('JavaScript error:', e.error);
+    console.warn('JavaScript error handled gracefully');
     
     // Graceful degradation for critical features
     if (e.error && e.error.message.includes('audio')) {
@@ -473,14 +575,3 @@ window.addEventListener('error', function(e) {
         }
     }
 });
-
-// Service Worker registration for offline functionality (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-            console.log('ServiceWorker registration successful');
-        }).catch(function(err) {
-            console.log('ServiceWorker registration failed');
-        });
-    });
-}
