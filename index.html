@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KTTP</title>
+    <meta name="description" content="KENN2 TALK ROOM Podcast with Nathaniel K Kyentu - Engaging conversations, inspiring stories, and meaningful connections">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-microphone"></i>
+                <span>KENN2</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#host" class="nav-link">Host</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#episodes" class="nav-link">Episodes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reviews" class="nav-link">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-hamburger" id="nav-hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header" id="home">
+        <div class="header-background"></div>
+        <div class="container">
+            <div class="logo-placeholder">
+                <div class="logo-circle">
+                    <i class="fas fa-microphone"></i>
+                </div>
+            </div>
+            <h1 class="podcast-title">KENN2 TALK ROOM</h1>
+            <p class="podcast-subtitle">Podcast</p>
+            <p class="host-subtitle">with Nathaniel K Kyentu</p>
+            
+            <!-- Welcome Audio Player -->
+            <div class="audio-player-container">
+                <div class="audio-description">
+                    <h3 style="color: black;">Welcome Message from Our Host</h3>
+                    <p>Listen to Nathaniel's personal welcome message</p>
+                </div>
+                <div class="custom-audio-player">
+                    <audio id="welcomeAudio" preload="metadata">
+                        <source src="path-to-your-welcome-audio.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <button class="play-pause-btn" id="playPauseBtn" aria-label="Play welcome message">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                        <div class="progress-handle" id="progressHandle"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                    </div>
+                    <div class="volume-container">
+                        <i class="fas fa-volume-up"></i>
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-wave"></div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">About the Podcast</h2>
+                <div class="about-content">
+                    <div class="about-card">
+                        <div class="card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Engaging Conversations</h3>
+                        <p>
+                            Welcome to KENN2 TALK ROOM, where meaningful dialogue meets inspiring storytelling. 
+                            Our podcast creates a space for authentic conversations that matter, bringing together 
+                            diverse voices and perspectives from around the world.
+                        </p>
+                    </div>
+                    <div class="about-card">
+                        <div class="card-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Inspiring Stories</h3>
+                        <p>
+                            Each episode dives deep into the human experience, exploring stories of triumph, 
+                            innovation, and transformation. We believe every person has a story worth telling, 
+                            and every conversation has the power to inspire change.
+                        </p>
+                    </div>
+                    <div class="about-card">
+                        <div class="card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Meaningful Connections</h3>
+                        <p>
+                            From intimate one-on-one interviews to dynamic panel discussions, KENN2 TALK ROOM 
+                            bridges communities and cultures, fostering understanding and building connections 
+                            that transcend boundaries.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Host Section -->
+    <section class="host-section" id="host">
+        <div class="container">
+            <h2 class="section-title">Meet Your Host</h2>
+            <div class="host-content">
+                <div class="host-image-container">
+                    <div class="host-image">
+                        <img src="images/hostspicture.jpg" alt="Nathaniel K Kyentu - Host of KENN2 TALK ROOM" loading="lazy">
+                        <div class="host-image-overlay"></div>
+                    </div>
+                    <div class="host-badge">
+                        <i class="fas fa-microphone-alt"></i>
+                        <span>Host</span>
+                    </div>
+                </div>
+                <div class="host-info">
+                    <h3 class="host-name">Nathaniel K Kyentu</h3>
+                    <p class="host-title">Podcast Host & Storyteller</p>
+                    <div class="host-description">
+                        <p>
+                            Nathaniel K Kyentu is a passionate storyteller and conversation catalyst who believes 
+                            in the transformative power of authentic dialogue. With a background in journalism 
+                            and community building, he brings a unique perspective to every conversation.
+                        </p>
+                        <p>
+                            His approach to podcasting is rooted in curiosity, empathy, and a genuine desire 
+                            to understand the human experience. Through KENN2 TALK ROOM, Nathaniel creates 
+                            a safe space where guests can share their most meaningful stories and insights.
+                        </p>
+                        <div class="host-stats">
+                            <div class="stat">
+                                <span class="stat-number">10+</span>
+                                <span class="stat-label">Episodes</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">1k+</span>
+                                <span class="stat-label">Listeners</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">2</span>
+                                <span class="stat-label">Seasons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="social-section" id="social">
+        <div class="container">
+            <h2 class="section-title">Connect With Us</h2>
+            <div class="social-links">
+                <a href="https://instagram.com/kenn2talkroom" class="social-link" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-content">
+                        <h3>Instagram</h3>
+                        <p>Behind the scenes content</p>
+                    </div>
+                </a>
+                <a href="https://instagram.com/nathanielkkyentu" class="social-link" target="_blank" rel="noopener" aria-label="Follow Nathaniel on Instagram">
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-content">
+                        <h3>Nathaniel's Instagram</h3>
+                        <p>Personal updates & insights</p>
+                    </div>
+                </a>
+                <a href="https://twitter.com/kenn2talkroom" class="social-link" target="_blank" rel="noopener" aria-label="Follow us on X (Twitter)">
+                    <div class="social-icon">
+                        <i class="fab fa-x-twitter"></i>
+                    </div>
+                    <div class="social-content">
+                        <h3>X (Twitter)</h3>
+                        <p>Latest updates & discussions</p>
+                    </div>
+                </a>
+                <a href="mailto:hello@kenn2talkroom.com" class="social-link" aria-label="Send us an email">
+                    <div class="social-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="social-content">
+                        <h3>Email</h3>
+                        <p>Get in touch directly</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Episodes Section -->
+    <section class="episodes-section" id="episodes">
+        <div class="container">
+            <h2 class="section-title">Episodes</h2>
+            <div class="episodes-tabs">
+                <button class="tab-btn active" data-season="1">Season 1</button>
+                <button class="tab-btn" data-season="2">Season 2</button>
+                <button class="tab-btn" data-season="3">Season 3</button>
+            </div>
+            
+            <div class="episodes-content">
+                <div class="season-content active" id="season-1">
+                    <div class="episodes-grid">
+                        <div class="episode-card">
+                            <div class="episode-number">01</div>
+                            <h3>The Journey Begins</h3>
+                            <p>Our inaugural episode where we set the foundation for meaningful conversations and introduce the vision behind KENN2 TALK ROOM.</p>
+                            <div class="spotify-embed">
+                                <iframe src="https://open.spotify.com/embed/episode/PLACEHOLDER_ID" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                        <div class="episode-card">
+                            <div class="episode-number">02</div>
+                            <h3>Stories That Shape Us</h3>
+                            <p>Exploring how personal narratives influence our worldview and the power of storytelling in building connections across communities.</p>
+                            <div class="spotify-embed">
+                                <iframe src="https://open.spotify.com/embed/episode/PLACEHOLDER_ID" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                        <div class="episode-card">
+                            <div class="episode-number">03</div>
+                            <h3>Innovation and Impact</h3>
+                            <p>A deep dive into how innovation drives social change, featuring conversations with entrepreneurs and change-makers.</p>
+                            <div class="spotify-embed">
+                                <iframe src="https://open.spotify.com/embed/episode/PLACEHOLDER_ID" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="season-content" id="season-2">
+                    <div class="episodes-grid">
+                        <div class="episode-card">
+                            <div class="episode-number">01</div>
+                            <h3>New Horizons</h3>
+                            <p>Season 2 kicks off with fresh perspectives and exciting new voices joining our conversation community.</p>
+                            <div class="spotify-embed">
+                                <iframe src="https://open.spotify.com/embed/episode/PLACEHOLDER_ID" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                        <div class="episode-card">
+                            <div class="episode-number">02</div>
+                            <h3>Cultural Bridges</h3>
+                            <p>Exploring how different cultures approach storytelling and the universal themes that connect us all.</p>
+                            <div class="spotify-embed">
+                                <iframe src="https://open.spotify.com/embed/episode/PLACEHOLDER_ID" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="season-content" id="season-3">
+                    <div class="episodes-grid">
+                        <div class="episode-card">
+                            <div class="episode-number">01</div>
+                            <h3>Evolution of Dialogue</h3>
+                            <p>Reflecting on our journey and exploring how meaningful conversations continue to evolve in our digital age.</p>
+                            <div class="spotify-embed">
+                                <iframe src="https://open.spotify.com/embed/episode/PLACEHOLDER_ID" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- External Links Section -->
+    <section class="external-links-section" id="external-links">
+        <div class="container">
+            <h2 class="section-title">Listen Everywhere</h2>
+            <div class="external-links">
+                <a href="https://open.spotify.com/show/PLACEHOLDER" class="external-link" target="_blank" rel="noopener">
+                    <div class="link-icon">
+                        <i class="fab fa-spotify"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>Spotify</h3>
+                        <p>Stream all episodes and get notified of new releases</p>
+                        <span class="link-arrow">→</span>
+                    </div>
+                </a>
+                <a href="https://jollofradio.com/kenn2talkroom" class="external-link" target="_blank" rel="noopener">
+                    <div class="link-icon">
+                        <i class="fas fa-radio"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>Jollof Radio</h3>
+                        <p>Tune in live and join our radio community</p>
+                        <span class="link-arrow">→</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <h2 class="section-title">What People Are Saying</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="review-text">"KENN2 TALK ROOM delivers thought-provoking conversations that keep you engaged from start to finish. Nathaniel has a gift for bringing out the best in his guests. A must-listen podcast!"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Celebrity Reviewer" loading="lazy">
+                        </div>
+                        <div class="reviewer-details">
+                            <h4 class="reviewer-name">Amara Johnson</h4>
+                            <p class="reviewer-title">Award-Winning Actress</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="review-text">"Authentic, raw, and incredibly insightful. KENN2 TALK ROOM sets the standard for meaningful podcast conversations. Nathaniel's interviewing style is both respectful and revealing."</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Celebrity Reviewer" loading="lazy">
+                        </div>
+                        <div class="reviewer-details">
+                            <h4 class="reviewer-name">Dr. Marcus Thompson</h4>
+                            <p class="reviewer-title">Bestselling Author</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="review-text">"Every episode is a masterclass in storytelling and human connection. The production quality is exceptional, and the conversations are genuinely transformative. Absolutely brilliant work!"</p>
+                    </div>
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Celebrity Reviewer" loading="lazy">
+                        </div>
+                        <div class="reviewer-details">
+                            <h4 class="reviewer-name">Sofia Rodriguez</h4>
+                            <p class="reviewer-title">Film Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-description">
+                <p>Have a story to share? Want to be a guest on the show? Interested in sponsoring KENN2 TALK ROOM? We'd love to hear from you!</p>
+                <div class="contact-options">
+                    <div class="contact-option">
+                        <i class="fas fa-star"></i>
+                        <span>Send a Review</span>
+                    </div>
+                    <div class="contact-option">
+                        <i class="fas fa-handshake"></i>
+                        <span>Apply to be a Sponsor</span>
+                    </div>
+                    <div class="contact-option">
+                        <i class="fas fa-microphone"></i>
+                        <span>Guest Application</span>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required aria-describedby="name-error">
+                        <div class="error-message" id="name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required aria-describedby="email-error">
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject">
+                        <option value="general">General Inquiry</option>
+                        <option value="guest">Guest Application</option>
+                        <option value="sponsor">Sponsorship Opportunity</option>
+                        <option value="review">Submit a Review</option>
+                        <option value="feedback">Feedback</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message *</label>
+                    <textarea id="message" name="message" rows="6" required aria-describedby="message-error" placeholder="Tell us about yourself, your story, or how you'd like to get involved with KENN2 TALK ROOM..."></textarea>
+                    <div class="error-message" id="message-error"></div>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Send Message</span>
+                    <span class="btn-loader">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section class="sponsors-section" id="sponsors">
+        <div class="container">
+            <h2 class="section-title">Our Amazing Sponsors</h2>
+            <p class="sponsors-subtitle">Thank you to our partners who make KENN2 TALK ROOM possible</p>
+            <div class="sponsors-grid">
+                <div class="sponsor-card">
+                    <div class="sponsor-logo">
+                        <img src="https://images.pexels.com/photos/3184419/pexels-photo-3184419.jpeg?auto=compress&cs=tinysrgb&w=300&h=150&fit=crop" alt="Premium Sponsor Logo" loading="lazy">
+                    </div>
+                    <div class="sponsor-content">
+                        <h3>TechForward Solutions</h3>
+                        <p>Empowering conversations through innovative technology</p>
+                        <a href="https://techforward.com" target="_blank" rel="noopener" class="sponsor-link">
+                            Visit Website <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="sponsor-card">
+                    <div class="sponsor-logo">
+                        <img src="https://images.pexels.com/photos/3184421/pexels-photo-3184421.jpeg?auto=compress&cs=tinysrgb&w=300&h=150&fit=crop" alt="Partner Sponsor Logo" loading="lazy">
+                    </div>
+                    <div class="sponsor-content">
+                        <h3>Creative Media Hub</h3>
+                        <p>Supporting authentic storytelling and meaningful dialogue</p>
+                        <a href="https://creativemediahub.com" target="_blank" rel="noopener" class="sponsor-link">
+                            Visit Website <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="sponsor-card">
+                    <div class="sponsor-logo">
+                        <img src="https://images.pexels.com/photos/3184416/pexels-photo-3184416.jpeg?auto=compress&cs=tinysrgb&w=300&h=150&fit=crop" alt="Media Partner Logo" loading="lazy">
+                    </div>
+                    <div class="sponsor-content">
+                        <h3>Global Voices Network</h3>
+                        <p>Amplifying important voices and diverse perspectives</p>
+                        <a href="https://globalvoices.com" target="_blank" rel="noopener" class="sponsor-link">
+                            Visit Website <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-image">
+            <img src="images/podcastbanner.jpg" alt="Footer background" loading="lazy">
+            <div class="footer-overlay"></div>
+        </div>
+        <div class="footer-content">
+            <div class="footer-social">
+                <h3>Follow KENN2 TALK ROOM</h3>
+                <div class="footer-social-links">
+                    <a href="https://open.spotify.com/show/PLACEHOLDER" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                        <i class="fab fa-spotify"></i>
+                    </a>
+                    <a href="https://instagram.com/kenn2talkroom" target="_blank" rel="noopener" aria-label="Follow on Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com/kenn2talkroom" target="_blank" rel="noopener" aria-label="Follow on Twitter">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="https://youtube.com/@kenn2talkroom" target="_blank" rel="noopener" aria-label="Subscribe on YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="mailto:hello@kenn2talkroom.com" aria-label="Send us an email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="copyright">
+                © 2025 KENN2 TALK ROOM Podcast. Developed by 
+                <a href="https://bolitupac.github.io/My-Websit/" target="_blank" rel="noopener">Nanbol Dassak</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
