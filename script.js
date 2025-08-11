@@ -91,10 +91,15 @@ function initAudioPlayer() {
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             playPauseBtn.setAttribute('aria-label', 'Play welcome message');
         } else {
-            audio.play().catch(error => {
-                console.log('Audio play failed:', error);
-                showAudioError();
-            });
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Audio started successfully
+                }).catch(error => {
+                    console.error('Audio play failed:', error);
+                    showAudioError();
+                });
+            }
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             playPauseBtn.setAttribute('aria-label', 'Pause welcome message');
         }
@@ -102,6 +107,19 @@ function initAudioPlayer() {
     }
 
     // Audio event listeners
+    audio.addEventListener('loadstart', function() {
+        console.log('Audio loading started');
+    });
+    
+    audio.addEventListener('error', function(e) {
+        console.error('Audio error:', e);
+        showAudioError();
+    });
+    
+    audio.addEventListener('canplay', function() {
+        console.log('Audio can start playing');
+    });
+    
     audio.addEventListener('loadedmetadata', function() {
         durationSpan.textContent = formatTime(audio.duration);
     });
