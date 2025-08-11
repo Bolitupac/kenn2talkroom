@@ -89,19 +89,18 @@
             <!-- Welcome Audio Player -->
             <div class="audio-player-container">
                 <div class="audio-description">
-                    <h3 style="color: black;">Welcome Message from Our Host</h3>
+                    <h3>Welcome Message from Our Host</h3>
                     <p>Listen to Nathaniel's personal welcome message</p>
                 </div>
                 <div class="custom-audio-player">
-                    <audio id="welcomeAudio" preload="metadata">
-                        <source src="./audio/weclomemessage.mp3" type="audio/mpeg">
-                        <source src="./audio/weclomemessage.mp3" type="audio/mp3">
+                    <audio id="welcomeAudio" preload="none" crossorigin="anonymous">
+                        <source src="audio/weclomemessage.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                     <button class="play-pause-btn" id="playPauseBtn" aria-label="Play welcome message">
                         <i class="fas fa-play"></i>
                     </button>
-                    <div class="progress-container">
+                    <div class="progress-container" id="progressContainer">
                         <div class="progress-bar" id="progressBar"></div>
                         <div class="progress-handle" id="progressHandle"></div>
                     </div>

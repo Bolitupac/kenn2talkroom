@@ -71,77 +71,133 @@ function initAudioPlayer() {
     const playPauseBtn = document.getElementById('playPauseBtn');
     const progressBar = document.getElementById('progressBar');
     const progressHandle = document.getElementById('progressHandle');
-    const progressContainer = document.querySelector('.progress-container');
+    const progressContainer = document.getElementById('progressContainer');
     const currentTimeSpan = document.getElementById('currentTime');
     const durationSpan = document.getElementById('duration');
     const volumeSlider = document.getElementById('volumeSlider');
 
+    if (!audio || !playPauseBtn || !progressBar || !progressHandle || !progressContainer) {
+        console.error('Audio player elements not found');
+        return;
+    }
+
     let isPlaying = false;
     let isDragging = false;
+    let audioLoaded = false;
 
     // Set initial volume
-    audio.volume = 0.5;
+    audio.volume = 0.7;
+    
+    // Disable controls initially
+    progressContainer.style.opacity = '0.5';
+    progressContainer.style.pointerEvents = 'none';
 
     // Play/Pause functionality
     playPauseBtn.addEventListener('click', togglePlayPause);
 
     function togglePlayPause() {
-        if (isPlaying) {
-            audio.pause();
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playPauseBtn.setAttribute('aria-label', 'Play welcome message');
-        } else {
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Audio started successfully
-                }).catch(error => {
-                    console.error('Audio play failed:', error);
-                    showAudioError();
-                });
-            }
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            playPauseBtn.setAttribute('aria-label', 'Pause welcome message');
+        if (!audioLoaded) {
+            loadAudio();
+            return;
         }
-        isPlaying = !isPlaying;
+        
+        if (isPlaying) {
+            pauseAudio();
+        } else {
+            playAudio();
+        }
+    }
+    
+    function loadAudio() {
+        playPauseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        playPauseBtn.disabled = true;
+        
+        audio.load();
+    }
+    
+    function playAudio() {
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playPauseBtn.setAttribute('aria-label', 'Pause welcome message');
+            }).catch(error => {
+                console.error('Audio play failed:', error);
+                showAudioError('Failed to play audio. Please try again.');
+                resetPlayer();
+            });
+        }
+    }
+    
+    function pauseAudio() {
+        audio.pause();
+        isPlaying = false;
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playPauseBtn.setAttribute('aria-label', 'Play welcome message');
+    }
+    
+    function resetPlayer() {
+        isPlaying = false;
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playPauseBtn.setAttribute('aria-label', 'Play welcome message');
+        playPauseBtn.disabled = false;
+        progressBar.style.width = '0%';
+        progressHandle.style.left = '0%';
+        currentTimeSpan.textContent = '0:00';
     }
 
     // Audio event listeners
-    audio.addEventListener('loadstart', function() {
-        console.log('Audio loading started');
+    audio.addEventListener('loadstart', () => {
+        console.log('Welcome audio loading started');
+        playPauseBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
     });
     
-    audio.addEventListener('error', function(e) {
-        console.error('Audio error:', e);
-        showAudioError();
+    audio.addEventListener('loadeddata', () => {
+        console.log('Welcome audio data loaded');
+        audioLoaded = true;
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playPauseBtn.disabled = false;
+        progressContainer.style.opacity = '1';
+        progressContainer.style.pointerEvents = 'auto';
     });
     
-    audio.addEventListener('canplay', function() {
-        console.log('Audio can start playing');
+    audio.addEventListener('loadedmetadata', () => {
+        if (audio.duration && !isNaN(audio.duration)) {
+            durationSpan.textContent = formatTime(audio.duration);
+        }
     });
     
-    audio.addEventListener('loadedmetadata', function() {
-        durationSpan.textContent = formatTime(audio.duration);
+    audio.addEventListener('canplay', () => {
+        console.log('Welcome audio can start playing');
+        audioLoaded = true;
+        playPauseBtn.disabled = false;
+        if (playPauseBtn.innerHTML.includes('spinner')) {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
     });
 
-    audio.addEventListener('timeupdate', function() {
+    audio.addEventListener('error', (e) => {
+        console.error('Welcome audio error:', e);
+        const errorMsg = audio.error ? `Audio error: ${audio.error.message}` : 'Failed to load audio file';
+        showAudioError(errorMsg);
+        resetPlayer();
+    });
+
+    audio.addEventListener('timeupdate', () => {
         if (!isDragging) {
             updateProgress();
         }
     });
 
-    audio.addEventListener('ended', function() {
-        isPlaying = false;
-        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-        playPauseBtn.setAttribute('aria-label', 'Play welcome message');
-        progressBar.style.width = '0%';
-        progressHandle.style.left = '0%';
-        currentTimeSpan.textContent = '0:00';
+    audio.addEventListener('ended', () => {
+        resetPlayer();
     });
 
     // Progress bar functionality
-    progressContainer.addEventListener('click', function(e) {
-        if (!audio.duration) return;
+    progressContainer.addEventListener('click', (e) => {
+        if (!audioLoaded || !audio.duration) return;
         
         const rect = progressContainer.getBoundingClientRect();
         const percent = (e.clientX - rect.left) / rect.width;
@@ -153,19 +209,20 @@ function initAudioPlayer() {
 
     // Progress handle dragging
     progressHandle.addEventListener('mousedown', startDrag);
-    progressHandle.addEventListener('touchstart', startDrag, { passive: true });
+    progressHandle.addEventListener('touchstart', startDrag, { passive: false });
 
     function startDrag(e) {
+        if (!audioLoaded) return;
         isDragging = true;
         document.addEventListener('mousemove', dragProgress);
         document.addEventListener('mouseup', stopDrag);
-        document.addEventListener('touchmove', dragProgress, { passive: true });
+        document.addEventListener('touchmove', dragProgress, { passive: false });
         document.addEventListener('touchend', stopDrag);
         e.preventDefault();
     }
 
     function dragProgress(e) {
-        if (!isDragging || !audio.duration) return;
+        if (!isDragging || !audioLoaded || !audio.duration) return;
 
         const rect = progressContainer.getBoundingClientRect();
         const clientX = e.clientX || (e.touches && e.touches[0].clientX);
@@ -187,13 +244,13 @@ function initAudioPlayer() {
     }
 
     // Volume control
-    volumeSlider.addEventListener('input', function() {
+    volumeSlider.addEventListener('input', () => {
         audio.volume = volumeSlider.value / 100;
     });
 
     // Update progress display
     function updateProgress() {
-        if (!audio.duration) return;
+        if (!audioLoaded || !audio.duration || isNaN(audio.duration)) return;
 
         const percent = (audio.currentTime / audio.duration) * 100;
         progressBar.style.width = percent + '%';
@@ -211,10 +268,39 @@ function initAudioPlayer() {
     }
 
     // Show audio error
-    function showAudioError() {
+    function showAudioError(message = 'Audio unavailable') {
+        console.error('Audio Error:', message);
         playPauseBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-        playPauseBtn.setAttribute('aria-label', 'Audio unavailable');
-        playPauseBtn.style.background = 'var(--primary-blue)';
+        playPauseBtn.setAttribute('aria-label', message);
+        playPauseBtn.disabled = true;
+        
+        // Show error message to user
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        `;
+        errorDiv.textContent = message;
+        
+        const audioContainer = document.querySelector('.audio-player-container');
+        const existingError = audioContainer.querySelector('.audio-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        errorDiv.className = 'audio-error';
+        audioContainer.appendChild(errorDiv);
+        
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.remove();
+            }
+        }, 5000);
     }
 }
 
