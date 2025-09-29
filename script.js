@@ -660,6 +660,28 @@ style.textContent = `
         outline: 2px solid var(--primary-blue) !important;
         outline-offset: 2px !important;
     }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
 `;
 document.head.appendChild(style);
 

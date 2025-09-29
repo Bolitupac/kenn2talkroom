@@ -1717,6 +1717,24 @@ section {
         align-items: center;
         gap: 0.8rem;
     }
+    
+    .donate-card {
+        padding: 1.5rem;
+    }
+    
+    .donate-title {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .bank-details {
+        padding: 1rem;
+    }
+    
+    .bank-value span {
+        font-size: 1rem;
+    }
 }
 
 /* Performance Optimizations */
